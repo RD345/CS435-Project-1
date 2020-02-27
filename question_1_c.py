@@ -38,36 +38,47 @@ class Node:
             self.val = val
             
     # Deletes a value in the BST recursively:
-    def deleteRec(self, val):
+    def deleteRec(self, parent, val):
         if self.val:
-            if val is self.val:
-                # TODO delete curr
-                print("Deleted:", val)
+            if val is self.val: # Delete the current node
+                print("Deleted:", self.val)
+                if self.left:
+                    if self.right:
+                        # TODO: find next node to swap
+                        print()
+                    else:
+                        if parent:
+                            if parent.left is self:
+                                parent.left = self.left
+                            elif parent.right is self:
+                                parent.right = self.right
+                else:
+                    self = None
             
             elif val < self.val:
                 if self.left is None:
                     print("Node not found")
                     return
                 else:
-                    self.left.deleteRec(val)
+                    self.left.deleteRec(self, val)
 
             elif val > self.val:
                 if self.right is None:
                     print("Node not found")
                     return
                 else:
-                    self.right.deleteRec(val)
+                    self.right.deleteRec(self, val)
             else:
                 print("Node not found")
         else:
-            print("tree empty")
+            print("Tree is empty")
 
     # Finds the next biggest element in the BST recursively:
     def findNextRec(self, val):
         #TODO
         print()
 
-    # Finds the next biggest element in the BST recursively:
+    # Finds the next smallest element in the BST recursively:
     def findPrevRec(self, val):
         #TODO
         print()
@@ -102,5 +113,5 @@ root.insertRec(arr_in[3])
 root.insertRec(arr_in[4])
 root.insertRec(arr_in[5])
 
-root.deleteRec(4)
+root.deleteRec(None, 4)
 root.printTree()
