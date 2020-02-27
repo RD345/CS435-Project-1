@@ -63,13 +63,7 @@ class Node:
         #TODO
         print()
 
-# Print the tree
-    def PrintTree(self):
-        if self.left:
-            self.left.PrintTree()
-        print( self.val),
-        if self.right:
-            self.right.PrintTree()
+
 root = Node(None)
 arr_in = [5, 4, 12, 2, 0, 9]
 root.insertRec(arr_in[0])
