@@ -75,22 +75,39 @@ class Node:
 
     # Finds the next biggest element in the BST recursively:
     def findNextRec(self, val):
-        #TODO
-        print()
+        # TODO
+        if self:
+            if self + 1 is val: # If current is only one larger it must be the next biggest element.
+                return self
+            if self.right:
+                self.right.findNextRec(val)
+            # TODO
+            if val < self.val:
+                if self.left is None:
+                    self.left = Node(val)
+                else:
+                    self.left.insertRec(val)
+            elif val > self.val:
+                if self.right is None:
+                    self.right = Node(val)
+                else:
+                    self.right.insertRec(val)
+        else:
+            self.val = val
 
     # Finds the next smallest element in the BST recursively:
     def findPrevRec(self, val):
-        #TODO
+        # TODO
         print()
 
     # Finds the minimum value in the BST recursively:
     def findMinRec(self, val):
-        #TODO
+        # TODO
         print()
 
     # Finds the maximum value in the BST recursively:
     def findMaxRec(self, val):
-        #TODO
+        # TODO
         print()
 
     # Prints the BST recursively In-Order:
