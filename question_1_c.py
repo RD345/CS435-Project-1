@@ -101,14 +101,19 @@ class Node:
         print()
 
     # Finds the minimum value in the BST recursively:
-    def findMinRec(self, val):
-        # TODO
-        print()
+    def findMinRec(self):
+        if self.left is None:
+            print("Min value is:", self.val)
+        else:
+            self.left.findMinRec()
 
     # Finds the maximum value in the BST recursively:
-    def findMaxRec(self, val):
-        # TODO
-        print()
+    def findMaxRec(self):
+        if self.right is None:
+            print("Max value is:", self.val)
+            return self.val
+        else:
+            self.right.findMaxRec()
 
     # Prints the BST recursively In-Order:
     def printTree(self):
@@ -122,13 +127,12 @@ class Node:
 
 
 root = Node(None)
-arr_in = [5, 4, 12, 2, 0, 9]
-root.insertRec(arr_in[0])
-root.insertRec(arr_in[1])
-root.insertRec(arr_in[2])
-root.insertRec(arr_in[3])
-root.insertRec(arr_in[4])
-root.insertRec(arr_in[5])
+arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
+for n in arr_in:
+    root.insertRec(n)
+
+root.findMinRec()
+root.findMaxRec()
 
 root.deleteRec(None, 4)
 root.printTree()
