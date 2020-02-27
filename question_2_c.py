@@ -1,6 +1,14 @@
 # Project 1 Question 2 part c code - Python
 # Created by Ryan Doherty
 
+# Using the properties of a BST can make creating a sorted list very easy. Since we
+# know that: left < root < right, we can simply do an In-order traversal to print a list of 
+# increasing value. If we start with an unsorted list, we just feed that data into a new 
+# binary tree, then perform the In-order traversal.
+
+# (5 points) (You must submit code for this question! ) Implement the algorithm that
+# you described above in sort().
+
 def form_bst(root, num_list):
     for i in num_list:
         root.insert(i)
