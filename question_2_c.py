@@ -9,37 +9,43 @@
 # (5 points) (You must submit code for this question! ) Implement the algorithm that
 # you described above in sort().
 
-def form_bst(root, num_list):
-    for i in num_list:
-        root.insert(i)
-
-    for i in num_list:
-        if root.value:
-            print("null")
-
+# My Node class from earlier questions can implement this:
 class Node:
-    def __int__(self, val):
 
-        self.value = val
+    def __init__(self, val):
+
         self.left = None
         self.right = None
+        self.val = val
 
-    def insert(self, value):
-        if self.value:
-            if value < self.value:
+    # Inserts a value into the BST recursively:
+    def insertRec(self, val):
+        if self.val:
+            if val < self.val:
                 if self.left is None:
-                    self.left = Node(value)
+                    self.left = Node(val)
                 else:
-                    self.left.insert(value)
-            elif value > self.value:
+                    self.left.insertRec(val)
+            elif val > self.val:
                 if self.right is None:
-                    self.right = Node(value)
+                    self.right = Node(val)
                 else:
-                    self.right.insert(value)
+                    self.right.insertRec(val)
         else:
-            self.value = value
+            self.val = val
+            
+    def printTree(self):
+        if self.left:
+            self.left.printTree()
 
+        print(self.val, end=' ')
 
-root = Node()
-arr_in = [5, 4, 12, 2, 0, 9]
-form_bst(root, arr_in)
+        if self.right:
+            self.right.printTree()
+
+root = Node(None)
+arr_in = [5, 4, 12, 2, 0, 9, 58, 82, 6, 44, 25]
+for n in arr_in:
+    root.insertRec(n)
+
+root.printTree()
