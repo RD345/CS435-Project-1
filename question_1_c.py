@@ -75,21 +75,21 @@ class Node:
 
     # Finds the next biggest element in the BST recursively:
     def findNextRec(self, target, nextNode):
-        if self:
-            if nextNode is None:
+        if nextNode is None:
+            nextNode = self
+
+        if self.val + 1 is target: # If current is only one larger it must be the next biggest element.
+            nextNode = self
+
+        elif self.val < target and self.right: # If value is less, go right
+            self = self.right.findNextRec(target, nextNode)
+
+        elif self.val > target: # If value is greater, go left
+            if nextNode.val > self.val:
                 nextNode = self
-
-            if self.val + 1 is target: # If current is only one larger it must be the next biggest element.
-                nextNode = self
-
-            elif self.val < target and self.right: # If value is less, go right
-                self.right.findNextRec(target, nextNode)
-
-            elif self.val > target: # If value is greater, go left
-                if nextNode.val > self.val:
-                    nextNode = self
-                if self.left:
-                    self.left.findNextRec(target, nextNode)
+            if self.left:
+                self = self.left.findNextRec(target, nextNode)
+                
         return self
                 
 
@@ -148,7 +148,7 @@ root.printTree()
 print()
 root.findMinRec()
 root.findMaxRec()
-print("Next node is:", root.findNextRec(4, None).val)
+print("Next node is:", root.findNextRec(12, None).val)
 print("Previous node is:", root.findPrevRec(4, None).val)
 
 root.deleteRec(None, 4)
