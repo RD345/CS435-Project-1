@@ -74,42 +74,44 @@ class Node:
             print("Tree is empty")
 
     # Finds the next biggest element in the BST recursively:
-    def findNextRec(self, target, nextNode):
+    def findNextRec(self, start, nextNode):
         if nextNode is None:
             nextNode = self
 
-        if self.val + 1 is target: # If current is only one larger it must be the next biggest element.
-            nextNode = self
+        if self.val + 1 is start: # If current is only one larger it must be the next biggest element.
+            return nextNode
 
-        elif self.val < target and self.right: # If value is less, go right
-            self = self.right.findNextRec(target, nextNode)
+        elif self.val < start and self.right: # If value is less, go right
+            return self.right.findNextRec(start, nextNode)
 
-        elif self.val > target: # If value is greater, go left
+        elif self.val > start: # If value is greater, go left
             if nextNode.val > self.val:
                 nextNode = self
             if self.left:
-                self = self.left.findNextRec(target, nextNode)
-                
-        return self
+                return self.left.findNextRec(start, nextNode)
+
+        print(nextNode.val, end=' ')
+        
                 
 
     # Finds the next smallest element in the BST recursively:
-    def findPrevRec(self, target, prevNode):
+    def findPrevRec(self, start, prevNode):
         if self:
             if prevNode is None:
                 prevNode = Node(0)
 
-            if self.val - 1 is target: # If current is only one smaller it must be the next smallest element.
+            if self.val - 1 is start: # If current is only one smaller it must be the next smallest element.
                 prevNode = self
+                return prevNode
 
-            elif self.val < target: # If value is less, go right
+            elif self.val < start: # If value is less, go right
                 if prevNode.val < self.val:
                     prevNode = self
                 if self.right:
-                    self.right.findPrevRec(target, prevNode)
+                    return self.right.findPrevRec(start, prevNode)
 
-            elif self.val > target and self.left: # If value is greater, go left
-                self.left.findPrevRec(target, prevNode)
+            elif self.val > start and self.left: # If value is greater, go left
+                return self.left.findPrevRec(start, prevNode)
 
         return self
 
