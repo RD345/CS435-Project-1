@@ -1,4 +1,4 @@
-# Project 1 Question 1 part d code - Python
+# Project 1 Question 1-d - Python
 # Created by Ryan Doherty
 
 # (8 points) (You must submit code for this question! ) Submit an implementation

@@ -1,4 +1,4 @@
-# Project 1 Question 1 part c code - Python
+# Project 1 Question 1-c - Python
 # Created by Ryan Doherty
 
 # (8 points) (You must submit code for part of this question! ) Use the framework
