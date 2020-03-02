@@ -84,17 +84,18 @@ class Node:
     # Finds the next biggest element in the BST Iterively:
     def findNextIter(self, start):
         curr = self
-        next = self
         
         while True:
-            if curr.val + 1 is start: # If curr is only one larger it must be the next biggest element.
+            if curr is None:
+                return Node(None)
+
+            elif curr.val + 1 is start: # If curr is only one larger it must be the next biggest element.
                 return curr
 
             elif curr.val <= start: # If value is less, go right
                 curr = curr.right
 
             elif curr.val > start: # If value is greater, go left
-                next = curr
                 if curr.left:
                     curr = curr.left
                 else:
@@ -102,25 +103,24 @@ class Node:
         
 
     # Finds the next smallest element in the BST Iterively:
-    def findPrevIter(self, start, prevNode):
-        if self:
-            if prevNode is None:
-                prevNode = Node(0)
+    def findPrevIter(self, start):
+        curr = self
+        
+        while True:
+            if curr is None:
+                return Node(None)
+                
+            elif curr.val - 1 is start: # If curr is only one larger it must be the next biggest element.
+                return curr
 
-            if self.val - 1 is start: # If selfent is only one smaller it must be the next smallest element.
-                prevNode = self
-                return prevNode
+            elif curr.val < start: # If value is less, go right
+                if curr.right:
+                    curr = curr.right
+                else:
+                    return curr
 
-            elif self.val < start: # If value is less, go right
-                if prevNode.val < self.val:
-                    prevNode = self
-                if self.right:
-                    return self.right.findPrevIter(start, prevNode)
-
-            elif self.val > start and self.left: # If value is greater, go left
-                return self.left.findPrevIter(start, prevNode)
-
-        return self
+            elif curr.val >= start: # If value is greater, go left
+                curr = curr.left
 
     # Finds the minimum value in the BST Iterively:
     def findMinIter(self):
@@ -158,7 +158,7 @@ print()
 root.findMinIter()
 root.findMaxIter()
 print("Next node is:", root.findNextIter(5).val)
-print("Previous node is:", root.findPrevIter(4, None).val)
+print("Previous node is:", root.findPrevIter(9).val)
 
 root.deleteIter(None, 4)
 root.printTree()
