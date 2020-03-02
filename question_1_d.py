@@ -109,7 +109,7 @@ class Node:
         while True:
             if curr is None:
                 return Node(None)
-                
+
             elif curr.val - 1 is start: # If curr is only one larger it must be the next biggest element.
                 return curr
 
@@ -124,18 +124,23 @@ class Node:
 
     # Finds the minimum value in the BST Iterively:
     def findMinIter(self):
-        if self.left is None:
-            print("Min value is:", self.val)
-        else:
-            self.left.findMinIter()
+        curr = self
+
+        while True:
+            if curr.left is None:
+                return curr
+            else:
+                curr = curr.left
 
     # Finds the maximum value in the BST Iterively:
     def findMaxIter(self):
-        if self.right is None:
-            print("Max value is:", self.val)
-            return self.val
-        else:
-            self.right.findMaxIter()
+        curr = self
+
+        while True:
+            if curr.right is None:
+                return curr
+            else:
+                curr = curr.right
 
     # Prints the BST In-Order:
     def printTree(self):
@@ -151,14 +156,14 @@ class Node:
 root = Node(None)
 arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
 for n in arr_in:
-    root.insertIter(n)
-
+    root.insertIter(n) # 1. insertIter
 root.printTree()
 print()
-root.findMinIter()
-root.findMaxIter()
-print("Next node is:", root.findNextIter(5).val)
-print("Previous node is:", root.findPrevIter(9).val)
 
-root.deleteIter(None, 4)
+print("Min value is:", root.findMinIter().val) # 5. findMinIter
+print("Max value is:", root.findMaxIter().val) # 6. findMaxIter
+print("Next node is:", root.findNextIter(5).val) # 3. findNextIter
+print("Previous node is:", root.findPrevIter(9).val) # 4. findPrevIter
+
+root.deleteIter(None, 4) # 2. deleteIter
 root.printTree()
