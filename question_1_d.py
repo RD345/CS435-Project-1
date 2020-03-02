@@ -22,10 +22,10 @@ class Node:
         self.right = None
         self.val = val
 
-    # Inserts a value into the BST Iterursively:
+    # Inserts a value into the BST Iterively:
     def insertIter(self, val):
-        curr = self
         inserted = False
+        curr = self
 
         if curr.val:
             while not inserted:
@@ -40,14 +40,15 @@ class Node:
                         curr.right = Node(val)
                         inserted = True
                     else:
-                        curr.right = Node(val)
+                        curr = curr.right
+            
         else:
             self.val = val
             
-    # Deletes a value in the BST Iterursively:
+    # Deletes a value in the BST Iterively:
     def deleteIter(self, parent, val):
         if self.val:
-            if val is self.val: # Delete the current node
+            if val is self.val: # Delete the selfent node
                 print("Deleted:", self.val)
                 if self.left:
                     if self.right:
@@ -80,12 +81,12 @@ class Node:
         else:
             print("Tree is empty")
 
-    # Finds the next biggest element in the BST Iterursively:
+    # Finds the next biggest element in the BST Iterively:
     def findNextIter(self, start, nextNode):
         if nextNode is None:
             nextNode = self
 
-        if self.val + 1 is start: # If current is only one larger it must be the next biggest element.
+        if self.val + 1 is start: # If selfent is only one larger it must be the next biggest element.
             return nextNode
 
         elif self.val < start and self.right: # If value is less, go right
@@ -101,13 +102,13 @@ class Node:
         
                 
 
-    # Finds the next smallest element in the BST Iterursively:
+    # Finds the next smallest element in the BST Iterively:
     def findPrevIter(self, start, prevNode):
         if self:
             if prevNode is None:
                 prevNode = Node(0)
 
-            if self.val - 1 is start: # If current is only one smaller it must be the next smallest element.
+            if self.val - 1 is start: # If selfent is only one smaller it must be the next smallest element.
                 prevNode = self
                 return prevNode
 
@@ -122,14 +123,14 @@ class Node:
 
         return self
 
-    # Finds the minimum value in the BST Iterursively:
+    # Finds the minimum value in the BST Iterively:
     def findMinIter(self):
         if self.left is None:
             print("Min value is:", self.val)
         else:
             self.left.findMinIter()
 
-    # Finds the maximum value in the BST Iterursively:
+    # Finds the maximum value in the BST Iterively:
     def findMaxIter(self):
         if self.right is None:
             print("Max value is:", self.val)
@@ -137,7 +138,7 @@ class Node:
         else:
             self.right.findMaxIter()
 
-    # Prints the BST Iterursively In-Order:
+    # Prints the BST In-Order:
     def printTree(self):
         if self.left:
             self.left.printTree()

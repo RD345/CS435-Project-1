@@ -143,18 +143,24 @@ class Node:
         if self.right:
             self.right.printTree()
 
+    def rightRotate(self):
+        print()
 
-root = Node(None)
+    def leftRotate(self):
+        print()
+
+
+avlTree = Node(None)
 arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
 for n in arr_in:
-    root.insertIter(n)
+    avlTree.insertIter(n)
 
-root.printTree()
+avlTree.printTree()
 print()
-root.findMinIter()
-root.findMaxIter()
-print("Next node is:", root.findNextIter(12, None).val)
-print("Previous node is:", root.findPrevIter(4, None).val)
+avlTree.findMinIter()
+avlTree.findMaxIter()
+print("Next node is:", avlTree.findNextIter(12, None).val)
+print("Previous node is:", avlTree.findPrevIter(4, None).val)
 
-root.deleteIter(None, 4)
-root.printTree()
+avlTree.deleteIter(None, 4)
+avlTree.printTree()
