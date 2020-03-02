@@ -46,40 +46,58 @@ class Node:
             self.val = val
             
     # Deletes a value in the BST Iterively:
-    def deleteIter(self, parent, val):
-        if self.val:
-            if val is self.val: # Delete the selfent node
-                print("Deleted:", self.val)
-                if self.left:
-                    if self.right:
-                        # TODO: find next node to swap
-                        print()
-                    else:
-                        if parent:
-                            if parent.left is self:
-                                parent.left = self.left
-                            elif parent.right is self:
-                                parent.right = self.right
-                else:
-                    self = None
-            
-            elif val < self.val:
-                if self.left is None:
-                    print("Node not found")
-                    return
-                else:
-                    self.left.deleteIter(self, val)
+    def deleteIter(self, val):
+        curr = self
+        parent = self
+        print("Deleting:", val)
 
-            elif val > self.val:
-                if self.right is None:
-                    print("Node not found")
-                    return
+        while val:
+            # Base:
+            if curr is None:
+                print(val, "not found.")
+                return self
+
+            # Search for the value:
+            if val < curr.val:
+                parent = curr
+                curr = curr.left # Move left
+
+            elif val > curr.val:
+                parent = curr
+                curr = curr.right # Move right
+
+            else: # Delete the current node
+                # If a leaf:
+                if curr.left is None and curr.right is None: 
+                    # Delete it
+                    if parent.left is curr: # If curr is left child:
+                        parent.left = None
+                    elif parent.right is curr: # If curr is right child:
+                        parent.right = None
+                    return self
+                    
+                # If only one child:
+                elif curr.left is None or curr.right is None: 
+                    if parent.left is curr: # If current is a left child:
+                        if curr.left:
+                            parent.left = curr.left # Parent's left becomes current's left.
+                            curr = None
+                        elif curr.right:
+                            parent.left = curr.right # Parent's left becomes current's right.
+                            curr = None
+                    elif parent.right is curr: # If current is a right child:
+                        if curr.left:
+                            parent.right = curr.left # Parent's right becomes current's left.
+                        elif curr.right:
+                            parent.right = curr.right # Parent's right becomes current's right.
+                    return self
+
+                # TODO If two children:
                 else:
-                    self.right.deleteIter(self, val)
-            else:
-                print("Node not found")
-        else:
-            print("Tree is empty")
+                    temp = self.findNextIter(curr.val).val # Find the sucessor.
+                    curr.val = temp # Set the current node's value to the sucessor.
+                    val = temp # Continues the delete with the sucessor as the new target.
+                    curr = self
 
     # Finds the next biggest element in the BST Iterively:
     def findNextIter(self, start):
@@ -146,8 +164,9 @@ class Node:
     def printTree(self):
         if self.left:
             self.left.printTree()
-
-        print(self.val, end=' ')
+            
+        if self.val:
+            print(self.val, end=' ')
 
         if self.right:
             self.right.printTree()
@@ -164,6 +183,6 @@ print("Min value is:", root.findMinIter().val) # 5. findMinIter
 print("Max value is:", root.findMaxIter().val) # 6. findMaxIter
 print("Next node is:", root.findNextIter(5).val) # 3. findNextIter
 print("Previous node is:", root.findPrevIter(9).val) # 4. findPrevIter
+root.deleteIter(5) # 2. deleteIter
 
-root.deleteIter(None, 4) # 2. deleteIter
 root.printTree()
