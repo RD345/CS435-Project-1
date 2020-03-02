@@ -82,25 +82,24 @@ class Node:
             print("Tree is empty")
 
     # Finds the next biggest element in the BST Iterively:
-    def findNextIter(self, start, nextNode):
-        if nextNode is None:
-            nextNode = self
-
-        if self.val + 1 is start: # If selfent is only one larger it must be the next biggest element.
-            return nextNode
-
-        elif self.val < start and self.right: # If value is less, go right
-            return self.right.findNextIter(start, nextNode)
-
-        elif self.val > start: # If value is greater, go left
-            if nextNode.val > self.val:
-                nextNode = self
-            if self.left:
-                return self.left.findNextIter(start, nextNode)
-
-        print(nextNode.val, end=' ')
+    def findNextIter(self, start):
+        curr = self
+        next = self
         
-                
+        while True:
+            if curr.val + 1 is start: # If curr is only one larger it must be the next biggest element.
+                return curr
+
+            elif curr.val <= start: # If value is less, go right
+                curr = curr.right
+
+            elif curr.val > start: # If value is greater, go left
+                next = curr
+                if curr.left:
+                    curr = curr.left
+                else:
+                    return curr
+        
 
     # Finds the next smallest element in the BST Iterively:
     def findPrevIter(self, start, prevNode):
@@ -158,7 +157,7 @@ root.printTree()
 print()
 root.findMinIter()
 root.findMaxIter()
-print("Next node is:", root.findNextIter(12, None).val)
+print("Next node is:", root.findNextIter(5).val)
 print("Previous node is:", root.findPrevIter(4, None).val)
 
 root.deleteIter(None, 4)
