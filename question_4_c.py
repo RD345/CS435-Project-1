@@ -175,28 +175,48 @@ class Node:
                 curr = curr.right
 
     # Prints the BST In-Order:
-    def printTree(self):
+    def printInorder(self):
         if self.left:
-            self.left.printTree()
+            self.left.printInorder()
             
-       
         print(self.val, "(H=", self.height, ')', end=' ', sep='')
 
         if self.right:
-            self.right.printTree()
+            self.right.printInorder()
+
+    def printTreeDiagram(self):
+        tree = []
+
+        def printTreeDiagramHelper(self):
+            if len(tree) <= self.height:
+                tree.append('')
+
+            if self.left:
+                printTreeDiagramHelper(self.left)
+                
+            tree[self.height] += self.height * ' ' + str(self.val)
+
+            if self.right:
+                printTreeDiagramHelper(self.right)
+
+        
+        printTreeDiagramHelper(self)
+        for layer in tree:
+            print(layer)
+        
 
 
 avl = Node(None, 0)
 arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
 for n in arr_in:
     avl.insertIter(n) # 1. insertIter
-avl.printTree()
+avl.printInorder()
 print()
 
 print("Min value is:", avl.findMinIter().val) # 5. findMinIter
 print("Max value is:", avl.findMaxIter().val) # 6. findMaxIter
 print("Next node is:", avl.findNextIter(5).val) # 3. findNextIter
 print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
-avl.deleteIter(5) # 2. deleteIter
+# avl.deleteIter(11) # 2. deleteIter
 
-avl.printTree()
+avl.printTreeDiagram()
