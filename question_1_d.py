@@ -5,7 +5,7 @@
 # of the following iterative methods in a Binary Search Tree. You do not need to
 # submit written answers to the framework from above, but it might be useful for
 # you to consider the answers to those questions when writing code. Note that the
-# Iter sux simply means that the function is iterative. Keep in mind that an
+# Iter suffix simply means that the function is iterative. Keep in mind that an
 # iterative solution cannot make a single recursive call!
 # 1. insertIter
 # 2. deleteIter

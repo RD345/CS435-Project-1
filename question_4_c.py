@@ -22,9 +22,11 @@ class Node:
     def insertIter(self, val):
         inserted = False
         curr = self
-        height = 0
+        height = balanced = 0
 
-        if curr.val:
+        if not curr.val:
+            self.val = val
+        else:
             while not inserted:
                 height += 1
                 if val < curr.val:
@@ -39,8 +41,27 @@ class Node:
                         inserted = True
                     else:
                         curr = curr.right
-        else:
-            self.val = val
+
+            balance = curr.getBal()
+            while abs(balance) > 1:
+                # Case 1 - Left Left 
+                if balance > 1 and val < curr.left.val: 
+                    return curr.rightRotate() 
+        
+                # Case 2 - Right Right 
+                if balance < -1 and val > curr.right.val: 
+                    return curr.leftRotate() 
+        
+                # Case 3 - Left Right 
+                if balance > 1 and val > curr.left.val: 
+                    root.left = curr.leftRotate() 
+                    return curr.rightRotate() 
+        
+                # Case 4 - Right Left 
+                if balance < -1 and val < curr.right.val: 
+                    root.right = curr.rightRotate() 
+                    return curr.leftRotate()
+            
             
      # Deletes a value in the BST Iterively:
     def deleteIter(self, val):
@@ -133,7 +154,6 @@ class Node:
                 else:
                     return curr
         
-
     # Finds the next smallest element in the BST Iterively:
     def findPrevIter(self, start):
         curr = self
@@ -203,8 +223,17 @@ class Node:
         printTreeDiagramHelper(self)
         for layer in tree:
             print(layer)
-        
+    
+    # Function to get the balance of the node its called on. negative values < -1 are left-unbalanced,
+    # positive values > 1 are right unbalanced.
+    def getBal(self):
+        return self.findMaxIter().height - self.findMinIter().height
 
+    def rightRotate(self):
+        print("RR")
+
+    def leftRotate(self):
+        print("LL")
 
 avl = Node(None, 0)
 arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
@@ -220,3 +249,4 @@ print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
 # avl.deleteIter(11) # 2. deleteIter
 
 avl.printTreeDiagram()
+print(avl.left.getBal())

@@ -4,7 +4,7 @@
 # (8 points) (You must submit code for part of this question! ) Use the framework
 # below to describe how you would recursively implement the following methods of
 # a Binary Search Tree. Afterwards, submit an implementation of all of the methods
-# in your Github. Note that the Rec sux simply means that the function is recursive.
+# in your Github. Note that the Rec suffix simply means that the function is recursive.
 # 1. insertRec
 # 2. deleteRec
 # 3. findNextRec
