@@ -9,158 +9,194 @@
 # 5.	findMinIter
 # 6.	findMaxIter
 
-
 class Node:
 
-    def __init__(self, val):
+    def __init__(self, val, height):
 
         self.left = None
         self.right = None
         self.val = val
+        self.height = height
 
-    # Inserts a value into the BST Iterursively:
+    # Inserts a value into the BST Iterively:
     def insertIter(self, val):
-        curr = self
         inserted = False
+        curr = self
+        height = 0
 
         if curr.val:
             while not inserted:
+                height += 1
                 if val < curr.val:
                     if curr.left is None:
-                        curr.left = Node(val)
+                        curr.left = Node(val, height)
                         inserted = True
                     else:
                         curr = curr.left
                 elif val > curr.val:
                     if curr.right is None:
-                        curr.right = Node(val)
+                        curr.right = Node(val, height)
                         inserted = True
                     else:
-                        curr.right = Node(val)
+                        curr = curr.right
         else:
             self.val = val
             
-    # Deletes a value in the BST Iterursively:
-    def deleteIter(self, parent, val):
-        if self.val:
-            if val is self.val: # Delete the current node
-                print("Deleted:", self.val)
-                if self.left:
-                    if self.right:
-                        # TODO: find next node to swap
-                        print()
+     # Deletes a value in the BST Iterively:
+    def deleteIter(self, val):
+        curr = self
+        parent = self
+        print("Deleting:", val)
+
+        while val:
+            # Base:
+            if curr is None:
+                print(val, "not found.")
+                return self
+
+            # Search for the value:
+            elif val < curr.val:
+                parent = curr
+                curr = curr.left # Move left
+
+            elif val > curr.val:
+                parent = curr
+                curr = curr.right # Move right
+
+            else: # Delete the current node
+                # If a leaf:
+                if curr.left is None and curr.right is None: 
+                    # Delete it
+                    if parent.left is curr: # If curr is left child:
+                        parent.left = None
+                    elif parent.right is curr: # If curr is right child:
+                        parent.right = None
+                    return self
+                    
+                # If only one child:
+                elif curr.left is None or curr.right is None: 
+                    if parent.left is curr: # If current is a left child:
+                        if curr.left:
+                            parent.left = curr.left # Parent's left becomes current's left.
+                            curr = None
+                        elif curr.right:
+                            parent.left = curr.right # Parent's left becomes current's right.
+                            curr = None
+                    elif parent.right is curr: # If current is a right child:
+                        if curr.left:
+                            parent.right = curr.left # Parent's right becomes current's left.
+                        elif curr.right:
+                            parent.right = curr.right # Parent's right becomes current's right.
+                    return self
+
+                # If two children:
+                else:
+                    if self.findNextIter(curr.val):
+                        temp = self.findNextIter(curr.val) # Find the sucessor.
+                        
+                        if temp.val < curr.val:
+                            curr.val = temp.val # Set the current node's value to the sucessor.
+                            parent = curr
+                            curr = curr.left # Move left
+
+                        elif temp.val > curr.val:
+                            curr.val = temp.val # Set the current node's value to the sucessor.
+                            parent = curr
+                            curr = curr.right # Move right
+                        val = temp.val # Continues the delete with the sucessor as the new target.
                     else:
-                        if parent:
-                            if parent.left is self:
-                                parent.left = self.left
-                            elif parent.right is self:
-                                parent.right = self.right
-                else:
-                    self = None
-            
-            elif val < self.val:
-                if self.left is None:
-                    print("Node not found")
-                    return
-                else:
-                    self.left.deleteIter(self, val)
+                        # curr = None
+                        if parent.left is curr: # If current is a left child:
+                            parent.left = None
 
-            elif val > self.val:
-                if self.right is None:
-                    print("Node not found")
-                    return
-                else:
-                    self.right.deleteIter(self, val)
-            else:
-                print("Node not found")
-        else:
-            print("Tree is empty")
+                        elif parent.right is curr: # If current is a right child:
+                            parent.right = None 
+                        return
 
-    # Finds the next biggest element in the BST Iterursively:
-    def findNextIter(self, start, nextNode):
-        if nextNode is None:
-            nextNode = self
-
-        if self.val + 1 is start: # If current is only one larger it must be the next biggest element.
-            return nextNode
-
-        elif self.val < start and self.right: # If value is less, go right
-            return self.right.findNextIter(start, nextNode)
-
-        elif self.val > start: # If value is greater, go left
-            if nextNode.val > self.val:
-                nextNode = self
-            if self.left:
-                return self.left.findNextIter(start, nextNode)
-
-        print(nextNode.val, end=' ')
+    # Finds the next biggest element in the BST Iterively:
+    def findNextIter(self, start):
+        curr = self
         
-                
+        while True:
+            if curr is None:
+                return curr
 
-    # Finds the next smallest element in the BST Iterursively:
-    def findPrevIter(self, start, prevNode):
-        if self:
-            if prevNode is None:
-                prevNode = Node(0)
+            elif curr.val + 1 is start: # If curr is only one larger it must be the next biggest element.
+                return curr
 
-            if self.val - 1 is start: # If current is only one smaller it must be the next smallest element.
-                prevNode = self
-                return prevNode
+            elif curr.val <= start: # If value is less, go right
+                curr = curr.right
 
-            elif self.val < start: # If value is less, go right
-                if prevNode.val < self.val:
-                    prevNode = self
-                if self.right:
-                    return self.right.findPrevIter(start, prevNode)
+            elif curr.val > start: # If value is greater, go left
+                if curr.left:
+                    curr = curr.left
+                else:
+                    return curr
+        
 
-            elif self.val > start and self.left: # If value is greater, go left
-                return self.left.findPrevIter(start, prevNode)
+    # Finds the next smallest element in the BST Iterively:
+    def findPrevIter(self, start):
+        curr = self
+        
+        while True:
+            if curr is None:
+                return Node(None)
 
-        return self
+            elif curr.val - 1 is start: # If curr is only one larger it must be the next biggest element.
+                return curr
 
-    # Finds the minimum value in the BST Iterursively:
+            elif curr.val < start: # If value is less, go right
+                if curr.right:
+                    curr = curr.right
+                else:
+                    return curr
+
+            elif curr.val >= start: # If value is greater, go left
+                curr = curr.left
+
+    # Finds the minimum value in the BST Iterively:
     def findMinIter(self):
-        if self.left is None:
-            print("Min value is:", self.val)
-        else:
-            self.left.findMinIter()
+        curr = self
 
-    # Finds the maximum value in the BST Iterursively:
+        while True:
+            if curr.left is None:
+                return curr
+            else:
+                curr = curr.left
+
+    # Finds the maximum value in the BST Iterively:
     def findMaxIter(self):
-        if self.right is None:
-            print("Max value is:", self.val)
-            return self.val
-        else:
-            self.right.findMaxIter()
+        curr = self
 
-    # Prints the BST Iterursively In-Order:
+        while True:
+            if curr.right is None:
+                return curr
+            else:
+                curr = curr.right
+
+    # Prints the BST In-Order:
     def printTree(self):
         if self.left:
             self.left.printTree()
-
-        print(self.val, end=' ')
+            
+       
+        print(self.val, "(H=", self.height, ')', end=' ', sep='')
 
         if self.right:
             self.right.printTree()
 
-    def rightRotate(self):
-        print()
 
-    def leftRotate(self):
-        print()
-
-
-avlTree = Node(None)
+avl = Node(None, 0)
 arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
 for n in arr_in:
-    avlTree.insertIter(n)
-
-avlTree.printTree()
+    avl.insertIter(n) # 1. insertIter
+avl.printTree()
 print()
-avlTree.findMinIter()
-avlTree.findMaxIter()
-print("Next node is:", avlTree.findNextIter(12, None).val)
-print("Previous node is:", avlTree.findPrevIter(4, None).val)
 
-avlTree.deleteIter(None, 4)
-avlTree.printTree()
+print("Min value is:", avl.findMinIter().val) # 5. findMinIter
+print("Max value is:", avl.findMaxIter().val) # 6. findMaxIter
+print("Next node is:", avl.findNextIter(5).val) # 3. findNextIter
+print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
+avl.deleteIter(5) # 2. deleteIter
+
+avl.printTree()

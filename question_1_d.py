@@ -182,8 +182,7 @@ class Node:
         if self.left:
             self.left.printTree()
             
-        if self.val:
-            print(self.val, end=' ')
+        print(self.val, end=' ')
 
         if self.right:
             self.right.printTree()
