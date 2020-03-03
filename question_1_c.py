@@ -89,8 +89,6 @@ class Node:
                 nextNode = self
             if self.left:
                 return self.left.findNextRec(start, nextNode)
-
-        print("sefesf", nextNode.val, end=' ')
         
                 
 

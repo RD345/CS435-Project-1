@@ -19,16 +19,6 @@ def getRandomArray(n):
         arrOut.append(i)
         arrIn.remove(i)
 
-    # for elem in arrIn:
-    #     while arrOut[elem] is elem:
-    #         i = random.randint(0, n)
-
-    #     if arrOut[i] is None:
-    #         arrOut.insert(i, elem)
-    #     else:
-    #         while arrOut[elem] is None:
-    #             i = random.randint(0, n)
-                
     return arrOut
 
 def printArray(arr):
