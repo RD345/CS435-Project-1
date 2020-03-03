@@ -74,44 +74,35 @@ class Node:
             print("Tree is empty")
 
     # Finds the next biggest element in the BST recursively:
-    def findNextRec(self, start, nextNode):
-        if nextNode is None:
-            nextNode = self
-
+    def findNextRec(self, start):
         if self.val + 1 is start: # If current is only one larger it must be the next biggest element.
-            return nextNode
+            return self
 
-        elif self.val < start and self.right: # If value is less, go right
-            return self.right.findNextRec(start, nextNode)
-
+        elif self.val <= start: # If value is less, go right
+            return self.right.findNextRec(start)
+            
         elif self.val > start: # If value is greater, go left
-            if nextNode.val > self.val:
-                nextNode = self
             if self.left:
-                return self.left.findNextRec(start, nextNode)
+                return self.left.findNextRec(start)
+            else:
+                return self
         
                 
 
     # Finds the next smallest element in the BST recursively:
-    def findPrevRec(self, start, prevNode):
-        if self:
-            if prevNode is None:
-                prevNode = Node(0)
+    def findPrevRec(self, start):
+        if self.val - 1 is start: # If current is only one smaller it must be the next smallest element.
+            return self
 
-            if self.val - 1 is start: # If current is only one smaller it must be the next smallest element.
-                prevNode = self
-                return prevNode
+        elif self.val < start: # If value is less, go right
+            if self.right:
+                return self.right.findPrevRec(start)
+            else:
+                return self
 
-            elif self.val < start: # If value is less, go right
-                if prevNode.val < self.val:
-                    prevNode = self
-                if self.right:
-                    return self.right.findPrevRec(start, prevNode)
+        elif self.val >= start and self.left: # If value is greater, go left
+            return self.left.findPrevRec(start)
 
-            elif self.val > start and self.left: # If value is greater, go left
-                return self.left.findPrevRec(start, prevNode)
-
-        return self
 
     # Finds the minimum value in the BST recursively:
     def findMinRec(self):
@@ -148,8 +139,8 @@ root.printTree()
 print()
 root.findMinRec()
 root.findMaxRec()
-print("Next node is:", root.findNextRec(12, None).val)
-print("Previous node is:", root.findPrevRec(4, None).val)
+print("Next node is:", root.findNextRec(12).val)
+print("Previous node is:", root.findPrevRec(4).val)
 
 root.deleteRec(None, 4)
 root.printTree()
