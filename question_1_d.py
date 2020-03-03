@@ -58,7 +58,7 @@ class Node:
                 return self
 
             # Search for the value:
-            if val < curr.val:
+            elif val < curr.val:
                 parent = curr
                 curr = curr.left # Move left
 
@@ -92,12 +92,29 @@ class Node:
                             parent.right = curr.right # Parent's right becomes current's right.
                     return self
 
-                # TODO If two children:
+                # If two children:
                 else:
-                    temp = self.findNextIter(curr.val).val # Find the sucessor.
-                    curr.val = temp # Set the current node's value to the sucessor.
-                    val = temp # Continues the delete with the sucessor as the new target.
-                    curr = self
+                    if self.findNextIter(curr.val):
+                        temp = self.findNextIter(curr.val) # Find the sucessor.
+                        
+                        if temp.val < curr.val:
+                            curr.val = temp.val # Set the current node's value to the sucessor.
+                            parent = curr
+                            curr = curr.left # Move left
+
+                        elif temp.val > curr.val:
+                            curr.val = temp.val # Set the current node's value to the sucessor.
+                            parent = curr
+                            curr = curr.right # Move right
+                        val = temp.val # Continues the delete with the sucessor as the new target.
+                    else:
+                        # curr = None
+                        if parent.left is curr: # If current is a left child:
+                            parent.left = None
+
+                        elif parent.right is curr: # If current is a right child:
+                            parent.right = None 
+                        return
 
     # Finds the next biggest element in the BST Iterively:
     def findNextIter(self, start):
@@ -105,7 +122,7 @@ class Node:
         
         while True:
             if curr is None:
-                return Node(None)
+                return curr
 
             elif curr.val + 1 is start: # If curr is only one larger it must be the next biggest element.
                 return curr
@@ -126,7 +143,7 @@ class Node:
         
         while True:
             if curr is None:
-                return Node(None)
+                return curr
 
             elif curr.val - 1 is start: # If curr is only one larger it must be the next biggest element.
                 return curr
@@ -183,6 +200,6 @@ print("Min value is:", root.findMinIter().val) # 5. findMinIter
 print("Max value is:", root.findMaxIter().val) # 6. findMaxIter
 print("Next node is:", root.findNextIter(5).val) # 3. findNextIter
 print("Previous node is:", root.findPrevIter(9).val) # 4. findPrevIter
-root.deleteIter(5) # 2. deleteIter
+root.deleteIter(4) # 2. deleteIter
 
 root.printTree()
