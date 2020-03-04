@@ -187,18 +187,18 @@ class Node:
         if self.right:
             self.right.printTree()
 
+if __name__ == "__main__":
+    root = Node(None)
+    arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
+    for n in arr_in:
+        root.insertIter(n) # 1. insertIter
+    root.printTree()
+    print()
 
-root = Node(None)
-arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
-for n in arr_in:
-    root.insertIter(n) # 1. insertIter
-root.printTree()
-print()
+    print("Min value is:", root.findMinIter().val) # 5. findMinIter
+    print("Max value is:", root.findMaxIter().val) # 6. findMaxIter
+    print("Next node is:", root.findNextIter(5).val) # 3. findNextIter
+    print("Previous node is:", root.findPrevIter(9).val) # 4. findPrevIter
+    root.deleteIter(4) # 2. deleteIter
 
-print("Min value is:", root.findMinIter().val) # 5. findMinIter
-print("Max value is:", root.findMaxIter().val) # 6. findMaxIter
-print("Next node is:", root.findNextIter(5).val) # 3. findNextIter
-print("Previous node is:", root.findPrevIter(9).val) # 4. findPrevIter
-root.deleteIter(4) # 2. deleteIter
-
-root.printTree()
+    root.printTree()

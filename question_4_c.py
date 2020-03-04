@@ -11,57 +11,80 @@
 
 class Node:
 
-    def __init__(self, val, height):
+    def __init__(self, val):
 
         self.left = None
         self.right = None
         self.val = val
-        self.height = height
+        self.height = 1
+        self.call_count = 0
 
     # Inserts a value into the BST Iterively:
     def insertIter(self, val):
         inserted = False
         curr = self
-        height = balanced = 0
+        balance = 0
 
-        if not curr.val:
-            self.val = val
-        else:
+        def setHeight(self):
+            inserted = False
+            curr = self
+            # balance = curr.getBal(self)
+            
             while not inserted:
-                height += 1
-                if val < curr.val:
-                    if curr.left is None:
-                        curr.left = Node(val, height)
-                        inserted = True
-                    else:
-                        curr = curr.left
-                elif val > curr.val:
-                    if curr.right is None:
-                        curr.right = Node(val, height)
-                        inserted = True
-                    else:
-                        curr = curr.right
+                if not curr.height:
+                    curr.height = 1 + max(self.setHeight(curr.left), 
+                self.setHeight(curr.right)) 
 
-            balance = curr.getBal()
+                if curr.left is None and curr.right is None:
+                    curr.height = 0
+               
+
+        # Update Heights:
+        setHeight(self)
+
+        def bal(self):
+            print("val:", val, balance)
             while abs(balance) > 1:
-                # Case 1 - Left Left 
+                # Case Left Left 
                 if balance > 1 and val < curr.left.val: 
                     return curr.rightRotate() 
         
-                # Case 2 - Right Right 
+                # Case Right Right 
                 if balance < -1 and val > curr.right.val: 
                     return curr.leftRotate() 
         
-                # Case 3 - Left Right 
+                # Case Left Right 
                 if balance > 1 and val > curr.left.val: 
                     root.left = curr.leftRotate() 
                     return curr.rightRotate() 
         
-                # Case 4 - Right Left 
+                # Case Right Left 
                 if balance < -1 and val < curr.right.val: 
                     root.right = curr.rightRotate() 
                     return curr.leftRotate()
-            
+
+        # Perform BST insert:
+        if not curr.val:
+            self.val = val
+        else:
+            while not inserted:
+                if val < curr.val:
+                    if curr.left is None:
+                        curr.left = Node(val)
+                        # bal(curr, True)
+                        inserted = True
+                    else:
+                        curr.height += 1
+                        curr = curr.left
+                elif val > curr.val:
+                    if curr.right is None:
+                        curr.right = Node(val)
+                        # bal(curr, False)
+                        inserted = True
+                    else:
+                        curr.height += 1
+                        curr = curr.right
+            bal(curr)
             
      # Deletes a value in the BST Iterively:
     def deleteIter(self, val):
@@ -226,8 +249,10 @@ class Node:
     
     # Function to get the balance of the node its called on. negative values < -1 are left-unbalanced,
     # positive values > 1 are right unbalanced.
-    def getBal(self):
-        return self.findMaxIter().height - self.findMinIter().height
+    def getBal(self, root):
+        if not root:
+            return 0
+        return root.findMaxIter().height - root.findMinIter().height
 
     def rightRotate(self):
         print("RR")
@@ -235,18 +260,19 @@ class Node:
     def leftRotate(self):
         print("LL")
 
-avl = Node(None, 0)
-arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
-for n in arr_in:
-    avl.insertIter(n) # 1. insertIter
-avl.printInorder()
-print()
+if __name__ == "__main__":
+    avl = Node(None)
+    arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
+    for n in arr_in:
+        avl.insertIter(n) # 1. insertIter
+    avl.printInorder()
+    print()
 
-print("Min value is:", avl.findMinIter().val) # 5. findMinIter
-print("Max value is:", avl.findMaxIter().val) # 6. findMaxIter
-print("Next node is:", avl.findNextIter(5).val) # 3. findNextIter
-print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
-# avl.deleteIter(11) # 2. deleteIter
+    print("Min value is:", avl.findMinIter().val) # 5. findMinIter
+    print("Max value is:", avl.findMaxIter().val) # 6. findMaxIter
+    print("Next node is:", avl.findNextIter(5).val) # 3. findNextIter
+    print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
+    # avl.deleteIter(11) # 2. deleteIter
 
-avl.printTreeDiagram()
-print(avl.left.getBal())
+    # avl.printTreeDiagram()
+    # print(avl.left.getBal(avl))

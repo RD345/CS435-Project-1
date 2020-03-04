@@ -25,5 +25,6 @@ def printArray(arr):
     for i in arr:
         print(i, end=' ')
 
-arr = getRandomArray(20)
-printArray(arr)
+if __name__ == "__main__":
+    arr = getRandomArray(20)
+    printArray(arr)

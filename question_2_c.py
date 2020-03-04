@@ -43,9 +43,10 @@ class Node:
         if self.right:
             self.right.printTree()
 
-root = Node(None)
-arr_in = [5, 4, 12, 2, 0, 9, 58, 82, 6, 44, 25]
-for n in arr_in:
-    root.insertRec(n)
+if __name__ == "__main__":
+    root = Node(None)
+    arr_in = [5, 4, 12, 2, 0, 9, 58, 82, 6, 44, 25]
+    for n in arr_in:
+        root.insertRec(n)
 
-root.printTree()
+    root.printTree()

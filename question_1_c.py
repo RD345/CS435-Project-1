@@ -129,18 +129,18 @@ class Node:
         if self.right:
             self.right.printTree()
 
+if __name__ == "__main__":
+    root = Node(None)
+    arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
+    for n in arr_in:
+        root.insertRec(n)
 
-root = Node(None)
-arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
-for n in arr_in:
-    root.insertRec(n)
+    root.printTree()
+    print()
+    root.findMinRec()
+    root.findMaxRec()
+    print("Next node is:", root.findNextRec(12).val)
+    print("Previous node is:", root.findPrevRec(4).val)
 
-root.printTree()
-print()
-root.findMinRec()
-root.findMaxRec()
-print("Next node is:", root.findNextRec(12).val)
-print("Previous node is:", root.findPrevRec(4).val)
-
-root.deleteRec(None, 4)
-root.printTree()
+    root.deleteRec(None, 4)
+    root.printTree()

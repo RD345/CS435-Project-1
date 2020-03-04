@@ -19,5 +19,6 @@ def printArray(arr):
     for i in arr:
         print(i, end=' ')
 
-arr = getSortedArray(20)
-printArray(arr)
+if __name__ == "__main__":
+    arr = getSortedArray(20)
+    printArray(arr)
