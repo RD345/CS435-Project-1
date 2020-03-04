@@ -9,7 +9,9 @@
 # 5.	findMinIter
 # 6.	findMaxIter
 
-class Node:
+import question_1_d as BST # Iteritive BST
+
+class Node(BST.Node):
 
     def __init__(self, val):
 
@@ -32,15 +34,14 @@ class Node:
             
             while not inserted:
                 if not curr.height:
-                    curr.height = 1 + max(self.setHeight(curr.left), 
-                self.setHeight(curr.right)) 
+                    curr.height = 1 + max(setHeight(curr.left),setHeight(curr.right)) 
 
                 if curr.left is None and curr.right is None:
                     curr.height = 0
                
 
         # Update Heights:
-        setHeight(self)
+        # setHeight(self)
 
         def bal(self):
             print("val:", val, balance)
@@ -157,75 +158,6 @@ class Node:
                             parent.right = None 
                         return
 
-    # Finds the next biggest element in the BST Iterively:
-    def findNextIter(self, start):
-        curr = self
-        
-        while True:
-            if curr is None:
-                return curr
-
-            elif curr.val + 1 is start: # If curr is only one larger it must be the next biggest element.
-                return curr
-
-            elif curr.val <= start: # If value is less, go right
-                curr = curr.right
-
-            elif curr.val > start: # If value is greater, go left
-                if curr.left:
-                    curr = curr.left
-                else:
-                    return curr
-        
-    # Finds the next smallest element in the BST Iterively:
-    def findPrevIter(self, start):
-        curr = self
-        
-        while True:
-            if curr is None:
-                return Node(None)
-
-            elif curr.val - 1 is start: # If curr is only one larger it must be the next biggest element.
-                return curr
-
-            elif curr.val < start: # If value is less, go right
-                if curr.right:
-                    curr = curr.right
-                else:
-                    return curr
-
-            elif curr.val >= start: # If value is greater, go left
-                curr = curr.left
-
-    # Finds the minimum value in the BST Iterively:
-    def findMinIter(self):
-        curr = self
-
-        while True:
-            if curr.left is None:
-                return curr
-            else:
-                curr = curr.left
-
-    # Finds the maximum value in the BST Iterively:
-    def findMaxIter(self):
-        curr = self
-
-        while True:
-            if curr.right is None:
-                return curr
-            else:
-                curr = curr.right
-
-    # Prints the BST In-Order:
-    def printInorder(self):
-        if self.left:
-            self.left.printInorder()
-            
-        print(self.val, "(H=", self.height, ')', end=' ', sep='')
-
-        if self.right:
-            self.right.printInorder()
 
     def printTreeDiagram(self):
         tree = []
@@ -265,7 +197,7 @@ if __name__ == "__main__":
     arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
     for n in arr_in:
         avl.insertIter(n) # 1. insertIter
-    avl.printInorder()
+    avl.printTree()
     print()
 
     print("Min value is:", avl.findMinIter().val) # 5. findMinIter
