@@ -8,10 +8,8 @@
 def getSortedArray(n):
     arr = []
  
-    for i in range(0, n):
-        arr.append(i + 1)
-
-    arr.reverse()
+    for i in range(n, 0, -1):
+        arr.append(i)
 
     return arr
 
