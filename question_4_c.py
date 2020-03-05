@@ -11,7 +11,7 @@
 
 import question_1_d as BST # Iteritive BST
 
-debug = False
+debug = False # Whether or not to show extra output
 
 class Node(BST.Node):
 
@@ -191,7 +191,7 @@ class Node(BST.Node):
                             parent.right = None 
                         return
 
-
+    # Prints an illustration of the tree:
     def printTreeDiagram(self):
         tree = []
         max_height = self.height
