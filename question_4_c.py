@@ -21,31 +21,53 @@ class Node(BST.Node):
         self.height = height
         self.call_count = 0
 
-    def setHeight(self):
+    def updateHeights(self, nodes):
         curr = self
         
-        while True:
+        for n in nodes:
             self.call_count += 1 # Add to counter
 
-            if not curr.height:
-                curr.height = 1 + max(setHeight(curr.left),setHeight(curr.right)) 
+            if curr.val is n:
+                pass
+            elif curr.left and curr.left.val is n:
+                curr = curr.left
+            elif curr.right and curr.right.val is n:
+                curr = curr.right
 
-            if curr.left is None and curr.right is None:
-                curr.height = 0
-                    
+            if curr.left:
+                if curr.right:
+                    curr.height = 1 + max(curr.left.height, curr.right.height) 
+                else:
+                    curr.height = 1 + curr.left.height
+
+            elif curr.right:
+                curr.height = 1 + curr.right.height
+                
+
     # Inserts a value into the BST Iterively:
     def insertIter(self, val):
         inserted = False
         curr = self
-        balance = 0
-       
+        # balance = 0
+        parents = [] # Holds the nodes of the parents
                
 
         # Update Heights:
         # self.setHeight()
 
         def bal(self):
-            print("val:", val, 'H:', self.height)
+            curr = self
+
+            if curr.left:
+                if curr.right:
+                    balance = curr.left.height - curr.right.height
+                else:
+                    balance = curr.height # No right child
+
+            elif curr.right:
+                balance = curr.height # No left child
+            
+            print("V:", val, 'H:', curr.height, 'B:', balance)
 
             while abs(balance) > 1:
                 # Case Left Left 
@@ -72,6 +94,8 @@ class Node(BST.Node):
         else:
             while not inserted:
                 if val < curr.val:
+                    parents.append(curr.val) # Remember parent
+
                     if curr.left is None:
                         curr.left = Node(val)
                         # bal(curr, True)
@@ -87,6 +111,8 @@ class Node(BST.Node):
                     else:
                         # curr.height += 1
                         curr = curr.right
+            print(parents)
+            self.updateHeights(parents)
             bal(curr)
             
      # Deletes a value in the BST Iterively:
@@ -163,21 +189,23 @@ class Node(BST.Node):
 
     def printTreeDiagram(self):
         tree = []
+        max_height = self.height
 
         def printTreeDiagramHelper(self):
-            if len(tree) <= self.height:
+            for h in range(0, self.height):
                 tree.append('')
 
             if self.left:
                 printTreeDiagramHelper(self.left)
                 
-            tree[self.height] += (self.height * ' ') + ' ' + str(self.val)
+            tree[self.height] += self.height * ' ' + ' ' + str(self.val) + max_height * ' '
 
             if self.right:
                 printTreeDiagramHelper(self.right)
 
         
         printTreeDiagramHelper(self)
+        tree.reverse()
         for layer in tree:
             print(layer)
     
@@ -206,7 +234,7 @@ if __name__ == "__main__":
     print("Max value is:", avl.findMaxIter().val) # 6. findMaxIter
     print("Next node is:", avl.findNextIter(5).val) # 3. findNextIter
     print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
-    avl.deleteIter(11) # 2. deleteIter
+    # avl.deleteIter(11) # 2. deleteIter
   
     avl.printTreeDiagram()
     # print(avl.left.getBal(avl))
