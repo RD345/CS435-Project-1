@@ -13,38 +13,40 @@ import question_1_d as BST # Iteritive BST
 
 class Node(BST.Node):
 
-    def __init__(self, val):
+    def __init__(self, val, height = 0):
 
         self.left = None
         self.right = None
         self.val = val
-        self.height = 1
+        self.height = height
         self.call_count = 0
 
+    def setHeight(self):
+        curr = self
+        
+        while True:
+            self.call_count += 1 # Add to counter
+
+            if not curr.height:
+                curr.height = 1 + max(setHeight(curr.left),setHeight(curr.right)) 
+
+            if curr.left is None and curr.right is None:
+                curr.height = 0
+                    
     # Inserts a value into the BST Iterively:
     def insertIter(self, val):
         inserted = False
         curr = self
         balance = 0
-
-        def setHeight(self):
-            inserted = False
-            curr = self
-            # balance = curr.getBal(self)
-            
-            while not inserted:
-                if not curr.height:
-                    curr.height = 1 + max(setHeight(curr.left),setHeight(curr.right)) 
-
-                if curr.left is None and curr.right is None:
-                    curr.height = 0
+       
                
 
         # Update Heights:
-        # setHeight(self)
+        # self.setHeight()
 
         def bal(self):
-            print("val:", val, balance)
+            print("val:", val, 'H:', self.height)
+
             while abs(balance) > 1:
                 # Case Left Left 
                 if balance > 1 and val < curr.left.val: 
@@ -75,7 +77,7 @@ class Node(BST.Node):
                         # bal(curr, True)
                         inserted = True
                     else:
-                        curr.height += 1
+                        # curr.height += 1
                         curr = curr.left
                 elif val > curr.val:
                     if curr.right is None:
@@ -83,7 +85,7 @@ class Node(BST.Node):
                         # bal(curr, False)
                         inserted = True
                     else:
-                        curr.height += 1
+                        # curr.height += 1
                         curr = curr.right
             bal(curr)
             
@@ -169,7 +171,7 @@ class Node(BST.Node):
             if self.left:
                 printTreeDiagramHelper(self.left)
                 
-            tree[self.height] += self.height * ' ' + str(self.val)
+            tree[self.height] += (self.height * ' ') + ' ' + str(self.val)
 
             if self.right:
                 printTreeDiagramHelper(self.right)
@@ -204,7 +206,7 @@ if __name__ == "__main__":
     print("Max value is:", avl.findMaxIter().val) # 6. findMaxIter
     print("Next node is:", avl.findNextIter(5).val) # 3. findNextIter
     print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
-    # avl.deleteIter(11) # 2. deleteIter
-
-    # avl.printTreeDiagram()
+    avl.deleteIter(11) # 2. deleteIter
+  
+    avl.printTreeDiagram()
     # print(avl.left.getBal(avl))
