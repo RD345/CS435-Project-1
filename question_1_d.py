@@ -21,6 +21,7 @@ class Node:
         self.left = None
         self.right = None
         self.val = val
+        self.traversals = 0
 
     # Inserts a value into the BST Iterively:
     def insertIter(self, val):
@@ -34,12 +35,14 @@ class Node:
                         curr.left = Node(val)
                         inserted = True
                     else:
+                        self.traversals += 1 # Add to traversals
                         curr = curr.left
                 elif val > curr.val:
                     if curr.right is None:
                         curr.right = Node(val)
                         inserted = True
                     else:
+                        self.traversals += 1 # Add to traversals
                         curr = curr.right
             
         else:
@@ -60,10 +63,12 @@ class Node:
             # Search for the value:
             elif val < curr.val:
                 parent = curr
+                self.traversals += 1 # Add to traversals
                 curr = curr.left # Move left
 
             elif val > curr.val:
                 parent = curr
+                self.traversals += 1 # Add to traversals
                 curr = curr.right # Move right
 
             else: # Delete the current node
@@ -100,11 +105,13 @@ class Node:
                         if temp.val < curr.val:
                             curr.val = temp.val # Set the current node's value to the sucessor.
                             parent = curr
+                            self.traversals += 1 # Add to traversals
                             curr = curr.left # Move left
 
                         elif temp.val > curr.val:
                             curr.val = temp.val # Set the current node's value to the sucessor.
                             parent = curr
+                            self.traversals += 1 # Add to traversals
                             curr = curr.right # Move right
                         val = temp.val # Continues the delete with the sucessor as the new target.
                     else:
@@ -128,10 +135,12 @@ class Node:
                 return curr
 
             elif curr.val <= start: # If value is less, go right
+                self.traversals += 1 # Add to traversals
                 curr = curr.right
 
             elif curr.val > start: # If value is greater, go left
                 if curr.left:
+                    self.traversals += 1 # Add to traversals
                     curr = curr.left
                 else:
                     return curr
@@ -150,11 +159,13 @@ class Node:
 
             elif curr.val < start: # If value is less, go right
                 if curr.right:
+                    self.traversals += 1 # Add to traversals
                     curr = curr.right
                 else:
                     return curr
 
             elif curr.val >= start: # If value is greater, go left
+                self.traversals += 1 # Add to traversals
                 curr = curr.left
 
     # Finds the minimum value in the BST Iterively:
@@ -165,6 +176,7 @@ class Node:
             if curr.left is None:
                 return curr
             else:
+                self.traversals += 1 # Add to traversals
                 curr = curr.left
 
     # Finds the maximum value in the BST Iterively:
@@ -175,6 +187,7 @@ class Node:
             if curr.right is None:
                 return curr
             else:
+                self.traversals += 1 # Add to traversals
                 curr = curr.right
 
     # Prints the BST In-Order:

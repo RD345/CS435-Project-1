@@ -11,7 +11,6 @@
 # 4. findPrevRec
 # 5. findMinRec
 # 6. findMaxRec
- 
 
 class Node:
 
@@ -20,6 +19,7 @@ class Node:
         self.left = None
         self.right = None
         self.val = val
+        self.traversals = 0
 
     # Inserts a value into the BST recursively:
     def insertRec(self, val):
@@ -28,14 +28,17 @@ class Node:
                 if self.left is None:
                     self.left = Node(val)
                 else:
+                    self.traversals += 1 # Add to traversals
                     self.left.insertRec(val)
             elif val > self.val:
                 if self.right is None:
                     self.right = Node(val)
                 else:
+                    self.traversals += 1 # Add to traversals
                     self.right.insertRec(val)
         else:
             self.val = val
+
             
     # Deletes a value in the BST recursively:
     def deleteRec(self, parent, val):
@@ -73,6 +76,7 @@ class Node:
         else:
             print("Tree is empty")
 
+
     # Finds the next biggest element in the BST recursively:
     def findNextRec(self, start):
         if self.val + 1 is start: # If current is only one larger it must be the next biggest element.
@@ -86,7 +90,6 @@ class Node:
                 return self.left.findNextRec(start)
             else:
                 return self
-        
                 
 
     # Finds the next smallest element in the BST recursively:
@@ -111,6 +114,7 @@ class Node:
         else:
             self.left.findMinRec()
 
+
     # Finds the maximum value in the BST recursively:
     def findMaxRec(self):
         if self.right is None:
@@ -118,6 +122,7 @@ class Node:
             return self.val
         else:
             self.right.findMaxRec()
+
 
     # Prints the BST recursively In-Order:
     def printTree(self):
@@ -128,6 +133,13 @@ class Node:
 
         if self.right:
             self.right.printTree()
+
+    def getTraversals(self):
+        if self.left:
+            self.traversals += self.left.getTraversals()
+
+        if self.right:
+            self.traversals += self.right.getTraversals()
 
 if __name__ == "__main__":
     root = Node(None)

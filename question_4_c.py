@@ -11,6 +11,8 @@
 
 import question_1_d as BST # Iteritive BST
 
+debug = False
+
 class Node(BST.Node):
 
     def __init__(self, val, height = 0):
@@ -19,20 +21,20 @@ class Node(BST.Node):
         self.right = None
         self.val = val
         self.height = height
-        self.call_count = 0
+        self.traversals = 0
 
     def updateHeights(self, nodes):
         curr = self
         
         for n in nodes:
-            self.call_count += 1 # Add to counter
-
             if curr.val is n:
                 pass
             elif curr.left and curr.left.val is n:
                 curr = curr.left
+                self.traversals += 1 # Add to traversals
             elif curr.right and curr.right.val is n:
                 curr = curr.right
+                self.traversals += 1 # Add to traversals
 
             if curr.left:
                 if curr.right:
@@ -50,10 +52,7 @@ class Node(BST.Node):
         curr = self
         # balance = 0
         parents = [] # Holds the nodes of the parents
-               
-
-        # Update Heights:
-        # self.setHeight()
+      
 
         def bal(self):
             curr = self
@@ -67,7 +66,8 @@ class Node(BST.Node):
             elif curr.right:
                 balance = curr.height # No left child
             
-            print("V:", val, 'H:', curr.height, 'B:', balance)
+            if debug:
+                print("V:", val, 'H:', curr.height, 'B:', balance)
 
             while abs(balance) > 1:
                 # Case Left Left 
@@ -80,12 +80,12 @@ class Node(BST.Node):
         
                 # Case Left Right 
                 if balance > 1 and val > curr.left.val: 
-                    root.left = curr.leftRotate() 
+                    curr.left = curr.leftRotate() 
                     return curr.rightRotate() 
         
                 # Case Right Left 
                 if balance < -1 and val < curr.right.val: 
-                    root.right = curr.rightRotate() 
+                    curr.right = curr.rightRotate() 
                     return curr.leftRotate()
 
         # Perform BST insert:
@@ -101,7 +101,7 @@ class Node(BST.Node):
                         # bal(curr, True)
                         inserted = True
                     else:
-                        # curr.height += 1
+                        self.traversals += 1 # Add to traversals
                         curr = curr.left
                 elif val > curr.val:
                     if curr.right is None:
@@ -109,9 +109,10 @@ class Node(BST.Node):
                         # bal(curr, False)
                         inserted = True
                     else:
-                        # curr.height += 1
+                        self.traversals += 1 # Add to traversals
                         curr = curr.right
-            print(parents)
+            if debug:
+                print(parents)
             self.updateHeights(parents)
             bal(curr)
             
@@ -130,10 +131,12 @@ class Node(BST.Node):
             # Search for the value:
             elif val < curr.val:
                 parent = curr
+                self.traversals += 1 # Add to traversals
                 curr = curr.left # Move left
 
             elif val > curr.val:
                 parent = curr
+                self.traversals += 1 # Add to traversals
                 curr = curr.right # Move right
 
             else: # Delete the current node
@@ -170,11 +173,13 @@ class Node(BST.Node):
                         if temp.val < curr.val:
                             curr.val = temp.val # Set the current node's value to the sucessor.
                             parent = curr
+                            self.traversals += 1 # Add to traversals
                             curr = curr.left # Move left
 
                         elif temp.val > curr.val:
                             curr.val = temp.val # Set the current node's value to the sucessor.
                             parent = curr
+                            self.traversals += 1 # Add to traversals
                             curr = curr.right # Move right
                         val = temp.val # Continues the delete with the sucessor as the new target.
                     else:
@@ -206,8 +211,9 @@ class Node(BST.Node):
         
         printTreeDiagramHelper(self)
         tree.reverse()
-        for layer in tree:
-            print(layer)
+        if debug:
+            for layer in tree:
+                print(layer)
     
     # Function to get the balance of the node its called on. negative values < -1 are left-unbalanced,
     # positive values > 1 are right unbalanced.
@@ -217,14 +223,17 @@ class Node(BST.Node):
         return root.findMaxIter().height - root.findMinIter().height
 
     def rightRotate(self):
-        print("RR")
+        if debug:
+            print("RR")
 
     def leftRotate(self):
-        print("LL")
+        if debug:
+            print("LL")
 
 if __name__ == "__main__":
+    debug = True
     avl = Node(None)
-    arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11]
+    arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11, 1, 3, 7]
     for n in arr_in:
         avl.insertIter(n) # 1. insertIter
     avl.printTree()
