@@ -231,7 +231,7 @@ class Node(BST.Node):
             print("LL")
 
 if __name__ == "__main__":
-    debug = True
+    debug = False
     avl = Node(None)
     arr_in = [5, 4, 12, 2, 0, 9, 22, 8, 11, 1, 3, 7]
     for n in arr_in:
@@ -243,7 +243,7 @@ if __name__ == "__main__":
     print("Max value is:", avl.findMaxIter().val) # 6. findMaxIter
     print("Next node is:", avl.findNextIter(5).val) # 3. findNextIter
     print("Previous node is:", avl.findPrevIter(9).val) # 4. findPrevIter
-    # avl.deleteIter(11) # 2. deleteIter
+    avl.deleteIter(11) # 2. deleteIter
+    avl.printTree()
   
     avl.printTreeDiagram()
-    # print(avl.left.getBal(avl))

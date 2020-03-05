@@ -7,7 +7,7 @@ import question_1_c as BST # Recursive BST
 import question_4_c as AVL # AVL Tree
 import question_3_a as RA # getRandomArray
 
-arr = RA.getRandomArray(1000000)
+arr = RA.getRandomArray(10000)
 AVL = AVL.Node(None)
 BST = BST.Node(None)
 

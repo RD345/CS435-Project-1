@@ -49,4 +49,5 @@ if __name__ == "__main__":
     for n in arr_in:
         root.insertRec(n)
 
+    print("Array in: ", arr_in, '\n', 'Tree out: ', sep='', end='')
     root.printTree()
